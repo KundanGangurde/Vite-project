@@ -7,11 +7,13 @@ import {
   Typography,
   Box,
   TextField,
+  useTheme,
 } from "@mui/material";
 
 const steps = ["Personal Information", "Address Information", "Confirmation"];
 
 const Form = () => {
+  const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({
     name: "",
@@ -192,18 +194,34 @@ const Form = () => {
   };
 
   return (
-    <Container>
+    <Container
+      sx={{
+        maxWidth: "md",
+        padding: 2,
+        margin: "40px auto",
+        [theme.breakpoints.down("sm")]: {
+          padding: 1,
+          margin: "20px auto",
+        },
+      }}
+    >
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={activeStep}
           onChange={handleTabChange}
           aria-label="form tabs"
+          sx={{
+            [theme.breakpoints.down("sm")]: {
+              flexWrap: "wrap",
+            },
+          }}
         >
           {steps.map((label, index) => (
             <Tab key={label} label={label} />
           ))}
         </Tabs>
       </Box>
+
       <Box>
         {steps.map((step, index) => (
           <TabPanel value={activeStep} index={index} key={step}>
@@ -212,15 +230,41 @@ const Form = () => {
         ))}
       </Box>
       <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
-        <Button disabled={activeStep === 0} onClick={handleBack}>
+        <Button
+          disabled={activeStep === 0}
+          onClick={handleBack}
+          sx={{
+            [theme.breakpoints.down("sm")]: {
+              fontSize: "0.8rem",
+            },
+          }}
+        >
           Back
         </Button>
         {activeStep === steps.length - 1 ? (
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+            sx={{
+              [theme.breakpoints.down("sm")]: {
+                fontSize: "0.8rem",
+              },
+            }}
+          >
             Submit
           </Button>
         ) : (
-          <Button variant="contained" color="primary" onClick={handleNext}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleNext}
+            sx={{
+              [theme.breakpoints.down("sm")]: {
+                fontSize: "0.8rem",
+              },
+            }}
+          >
             Next
           </Button>
         )}
